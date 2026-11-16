@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>暑假最難忘的回憶｜貓咪陪讀的夏日時光</title>
+  
+  <!-- 載入 Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- 載入 Google Fonts: Noto Serif TC (散文內文與標題) & Noto Sans TC (標籤與介面元素) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind 自訂主題設定 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream: '#FDF8F2',
+            paper: '#FFFDF9',
+            espresso: '#4A3F35',
+            taupe: '#8C7B6B',
+            milktea: '#D49A6A',
+            coral: '#E08E6D',
+            borderwarm: '#EFE4D6',
+          },
+          fontFamily: {
+            serif: ['"Noto Serif TC"', 'serif'],
+            sans: ['"Noto Sans TC"', 'sans-serif'],
+          },
+          boxShadow: {
+            paper: '0 14px 44px -12px rgba(74, 63, 53, 0.08), 0 4px 16px -4px rgba(212, 154, 106, 0.08)',
+            float: '0 10px 25px -5px rgba(224, 142, 109, 0.45)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* 基礎背景與紙張微紋理 */
+    body {
+      background-color: #FDF8F2;
+      background-image: 
+        radial-gradient(circle at 12% 10%, rgba(212, 154, 106, 0.09) 0%, transparent 42%),
+        radial-gradient(circle at 88% 85%, rgba(224, 142, 109, 0.09) 0%, transparent 45%);
+      color: #4A3F35;
+      font-family: 'Noto Serif TC', serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* 散文段落首行縮排（標準繁體中文文學排版） */
+    .essay-paragraph {
+      text-indent: 2em;
+      line-height: 2.05;
+      letter-spacing: 0.03em;
+      text-align: justify;
+    }
+
+    /* 段落滾動淡入動畫 */
+    .reveal-section {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1), transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal-section.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* 插畫微幅呼吸與漂浮動畫 */
+    @keyframes gentleFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-4px); }
+    }
+    @keyframes tailWag {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(7deg); }
+    }
+    @keyframes sunPulse {
+      0%, 100% { opacity: 0.55; transform: scale(1); }
+      50% { opacity: 0.85; transform: scale(1.06); }
+    }
+    .animate-float {
+      animation: gentleFloat 4.5s ease-in-out infinite;
+    }
+    .animate-tail {
+      transform-origin: 138px 118px;
+      animation: tailWag 3.2s ease-in-out infinite;
+    }
+    .animate-sun {
+      transform-origin: 235px 38px;
+      animation: sunPulse 5s ease-in-out infinite;
+    }
+
+    /* 摸摸小貓飄浮愛心與肉球粒子動畫 */
+    @keyframes particleRise {
+      0% {
+        opacity: 0;
+        transform: translate(0, 0) scale(0.6) rotate(0deg);
+      }
+      15% {
+        opacity: 1;
+      }
+      80% {
+        opacity: 0.9;
+      }
+      100% {
+        opacity: 0;
+        transform: translate(var(--tx), var(--ty)) scale(1.15) rotate(var(--rot));
+      }
+    }
+    .floating-particle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 60;
+      animation: particleRise 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* 文字選取色彩 */
+    ::selection {
+      background-color: rgba(212, 154, 106, 0.28);
+      color: #4A3F35;
+    }
+
+    /* 列印專用樣式表：確保列印時乾淨優雅 */
+    @media print {
+      body {
+        background: #FFFFFF !important;
+        color: #1F1B18 !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .article-card {
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important;
+        max-width: 100% !important;
+        background: #FFFFFF !important;
+      }
+      .reveal-section {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+      .essay-paragraph {
+        font-size: 12pt !important;
+        line-height: 1.9 !important;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-milktea/30">
+
+  <!-- 頂部固定閱讀進度條 -->
+  <div class="fixed top-0 left-0 w-full h-1.5 bg-borderwarm/60 z-50 no-print" aria-hidden="true">
+    <div id="reading-progress" class="h-full w-0 bg-gradient-to-r from-milktea via-coral to-milktea transition-all duration-150 ease-out rounded-r-full"></div>
+  </div>
+
+  <!-- 主要內容容器 -->
+  <main class="w-full max-w-3xl mx-auto px-4 sm:px-6 pt-10 pb-24 sm:pt-16 sm:pb-28">
+    
+    <!-- 溫馨紙張質感文章卡片 -->
+    <article class="article-card bg-paper border border-borderwarm rounded-3xl shadow-paper px-6 py-10 sm:px-12 sm:py-14 md:px-16 md:py-16 relative overflow-hidden">
+      
+      <!-- 卡片頂部柔和光暈裝飾 -->
+      <div class="absolute -top-24 -right-24 w-64 h-64 bg-milktea/10 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
+      <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-coral/10 rounded-full blur-3xl pointer-events-none" aria-hidden="true"></div>
+
+      <!-- 頁首區塊：極簡插畫、副標題徽章與主標題 -->
+      <header class="text-center mb-10 sm:mb-12 relative z-10">
+        
+        <!-- 副標題徽章 -->
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cream border border-borderwarm text-taupe font-sans text-xs sm:text-sm font-medium tracking-wider mb-6 shadow-xs">
+          <span class="w-1.5 h-1.5 rounded-full bg-coral"></span>
+          <span>國中青春記事 • 貓咪陪讀日記</span>
+          <span class="w-1.5 h-1.5 rounded-full bg-milktea"></span>
+        </div>
+
+        <!-- 原創極簡 SVG 插畫：書本、珍珠奶茶與打盹的小貓 -->
+        <div class="w-full max-w-[280px] sm:max-w-[310px] mx-auto mb-6 animate-float" role="img" aria-label="一隻可愛的小貓蜷縮在參考書與冰涼珍珠奶茶旁休息的插畫">
+          <svg viewBox="0 0 280 155" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-auto drop-shadow-xs">
+            <!-- 夏日暖陽微光 -->
+            <circle cx="235" cy="38" r="22" fill="#FDE6C4" class="animate-sun"/>
+            <circle cx="235" cy="38" r="13" fill="#F8D29D"/>
+            
+            <!-- 桌面暖色底線 -->
+            <ellipse cx="140" cy="134" rx="118" ry="8" fill="#F3E8DA"/>
+
+            <!-- 左側：攤開的複習講義與原子筆 -->
+            <g>
+              <!-- 書本底層封面 -->
+              <path d="M26 123 L72 117 L118 123 L118 128 L72 122 L26 128 Z" fill="#D49A6A"/>
+              <!-- 左頁 -->
+              <path d="M28 122 C43 116, 58 116, 72 121 L72 95 C58 90, 43 90, 28 96 Z" fill="#FFFDF9" stroke="#D9C7B4" stroke-width="1.5"/>
+              <!-- 右頁 -->
+              <path d="M116 122 C101 116, 86 116, 72 121 L72 95 C86 90, 101 90, 116 96 Z" fill="#FFFDF9" stroke="#D9C7B4" stroke-width="1.5"/>
+              <!-- 書頁橫線 -->
+              <path d="M36 103 Q50 100 63 103" stroke="#E2D3C3" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M36 110 Q50 107 63 110" stroke="#E2D3C3" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M81 103 Q94 100 108 103" stroke="#E2D3C3" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M81 110 Q94 107 108 110" stroke="#E2D3C3" stroke-width="1.5" stroke-linecap="round"/>
+              <!-- 斜放的原子筆 -->
+              <line x1="88" y1="88" x2="112" y2="114" stroke="#E08E6D" stroke-width="3" stroke-linecap="round"/>
+              <polygon points="112,114 115,118 109,116" fill="#4A3F35"/>
+            </g>
+
+            <!-- 中間：慵懶蜷縮陪讀的小貓咪 -->
+            <g>
+              <!-- 搖晃的尾巴 -->
+              <path d="M138 118 C122 118, 116 105, 125 99 C130 96, 134 102, 130 106" stroke="#D49A6A" stroke-width="5.5" stroke-linecap="round" fill="none" class="animate-tail"/>
+              <!-- 貓咪圓滾滾的身體 -->
+              <ellipse cx="160" cy="113" rx="26" ry="17" fill="#E8B98A"/>
+              <!-- 橘白花紋斑點 -->
+              <path d="M152 97 C160 96, 168 99, 171 105 C163 107, 155 104, 152 97 Z" fill="#D49A6A"/>
+              <!-- 貓咪頭部 -->
+              <circle cx="176" cy="98" r="15" fill="#F2CBA2"/>
+              <!-- 左耳 -->
+              <path d="M164 88 L163 75 L173 84 Z" fill="#E8B98A" stroke="#E8B98A" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M165.5 86 L165 78.5 L170.5 84 Z" fill="#F5B7A6"/>
+              <!-- 右耳 -->
+              <path d="M180 84 L189 75 L188 88 Z" fill="#D49A6A" stroke="#D49A6A" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M182 84.5 L187 78.5 L186.5 86 Z" fill="#F5B7A6"/>
+              <!-- 閉眼微笑（安心陪讀中） -->
+              <path d="M168 98 Q171 101 174 98" stroke="#4A3F35" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+              <path d="M179 98 Q182 101 185 98" stroke="#4A3F35" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+              <!-- 粉嫩小鼻子與嘴巴 -->
+              <circle cx="176.5" cy="101.5" r="1.3" fill="#E08E6D"/>
+              <path d="M174.5 103.5 Q176.5 105.5 178.5 103.5" stroke="#4A3F35" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+              <!-- 腮紅 -->
+              <ellipse cx="166.5" cy="101.5" rx="2.5" ry="1.5" fill="#F2A694" opacity="0.7"/>
+              <ellipse cx="186.5" cy="101.5" rx="2.5" ry="1.5" fill="#F2A694" opacity="0.7"/>
+              <!-- 白色小肉球前爪 -->
+              <ellipse cx="174" cy="126" rx="7" ry="4" fill="#FFFDF9" stroke="#E2D3C3" stroke-width="1"/>
+            </g>
+
+            <!-- 右側：冰涼珍珠奶茶 -->
+            <g>
+              <!-- 粗吸管 -->
+              <path d="M225 90 L236 56" stroke="#E08E6D" stroke-width="4.5" stroke-linecap="round"/>
+              <!-- 飲料杯身 -->
+              <path d="M206 78 L238 78 L233 128 C232.7 130 231 131 229 131 L215 131 C213 131 211.3 130 211 128 Z" fill="#F6DFC4" stroke="#D49A6A" stroke-width="1.6"/>
+              <!-- 奶茶液面 -->
+              <path d="M207.5 88 L236.5 88 L233 128 C232.7 130 231 131 229 131 L215 131 C213 131 211.3 130 211 128 Z" fill="#E3B382"/>
+              <!-- 冰塊 -->
+              <rect x="213" y="92" width="7" height="7" rx="1.5" transform="rotate(12 213 92)" fill="#FFFDF9" opacity="0.65"/>
+              <rect x="223" y="94" width="6.5" height="6.5" rx="1.5" transform="rotate(-10 223 94)" fill="#FFFDF9" opacity="0.65"/>
+              <!-- Q彈黑糖珍珠 -->
+              <circle cx="215" cy="125" r="2.6" fill="#4A3F35"/>
+              <circle cx="222" cy="126" r="2.6" fill="#4A3F35"/>
+              <circle cx="228.5" cy="124.5" r="2.6" fill="#4A3F35"/>
+              <circle cx="218.5" cy="120" r="2.5" fill="#5C4E42"/>
+              <circle cx="225.5" cy="120" r="2.5" fill="#5C4E42"/>
+              <!-- 杯蓋封膜 -->
+              <rect x="204" y="75" width="36" height="4" rx="2" fill="#FFFDF9" stroke="#D49A6A" stroke-width="1.5"/>
+            </g>
+
+            <!-- 飄浮小愛心裝飾 -->
+            <path d="M196 67 C196 65, 193 64, 191.5 66 C190 64, 187 65, 187 67 C187 70, 191.5 73, 191.5 73 C191.5 73, 196 70, 196 67 Z" fill="#E08E6D" opacity="0.8"/>
+          </svg>
+        </div>
+
+        <!-- 文章主標題 -->
+        <h1 class="font-serif text-3xl sm:text-4xl md:text-[2.5rem] font-bold text-espresso tracking-wide leading-tight mb-4">
+          暑假最難忘的回憶
+        </h1>
+
+        <!-- 標題下方細緻裝飾線與閱讀輔助工具 -->
+        <div class="flex items-center justify-center gap-3 text-milktea/70 my-5">
+          <span class="h-px w-12 sm:w-16 bg-gradient-to-r from-transparent to-milktea/50"></span>
+          <svg class="w-4 h-4 text-coral/80" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <circle cx="12" cy="15.5" r="3.5"/>
+            <circle cx="6.5" cy="10.5" r="2"/>
+            <circle cx="10" cy="7.5" r="2"/>
+            <circle cx="14" cy="7.5" r="2"/>
+            <circle cx="17.5" cy="10.5" r="2"/>
+          </svg>
+          <span class="h-px w-12 sm:w-16 bg-gradient-to-l from-transparent to-milktea/50"></span>
+        </div>
+
+        <!-- 極簡閱讀體驗調整列（字級切換與列印） -->
+        <div class="flex items-center justify-center gap-2 font-sans text-xs text-taupe no-print">
+          <button type="button" id="font-decrease" class="px-2.5 py-1 rounded-lg bg-cream hover:bg-borderwarm/70 border border-borderwarm transition-colors cursor-pointer" title="縮小字體" aria-label="縮小字體">
+            A-
+          </button>
+          <button type="button" id="font-reset" class="px-2.5 py-1 rounded-lg bg-cream hover:bg-borderwarm/70 border border-borderwarm transition-colors cursor-pointer" title="標準字體" aria-label="標準字體">
+            標準字級
+          </button>
+          <button type="button" id="font-increase" class="px-2.5 py-1 rounded-lg bg-cream hover:bg-borderwarm/70 border border-borderwarm transition-colors cursor-pointer" title="放大字體" aria-label="放大字體">
+            A+
+          </button>
+          <span class="text-borderwarm mx-0.5">|</span>
+          <button type="button" onclick="window.print()" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-cream hover:bg-borderwarm/70 border border-borderwarm transition-colors cursor-pointer" title="列印文章">
+            <svg class="w-3.5 h-3.5 text-milktea" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2m-2 0H8v4h8v-4z"/>
+            </svg>
+            <span>列印</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- 散文內文區（完整保留一字不差） -->
+      <div id="essay-content" class="space-y-2 text-[1.0625rem] sm:text-[1.15rem] text-espresso transition-all duration-200 relative z-10">
+        
+        <!-- 第一段 -->
+        <p class="essay-paragraph reveal-section" data-section="intro">
+          國中生涯的最後一個暑假，對所有面臨會考壓力的考生來說，通常是黑白且沉悶的。為了在明年的戰場上全力以赴，我這個暑假幾乎都在家教老師家度過，每天與堆積如山的複習講義和模擬試題兵戎相見。一開始，看著窗外燦爛的陽光，再看看眼前密密麻麻的幾何圖形與歷史年表，心中不免感到一絲枯燥與無聊。然而，我萬萬沒有想到，這個原本預期會枯燥乏味的暑假，卻因為老師家的十隻貓咪，變成我生命中最難忘且溫暖的回憶。
+        </p>
+
+        <!-- 貓掌印分隔線 -->
+        <div class="py-3 flex justify-center items-center gap-4 text-milktea/45 reveal-section" aria-hidden="true">
+          <svg class="w-3.5 h-3.5 -rotate-12" viewBox="0 0 24 24" fill="currentColor">
+            <circle cx="12" cy="15.5" r="3.5"/><circle cx="6.5" cy="10.5" r="2"/><circle cx="10" cy="7.5" r="2"/><circle cx="14" cy="7.5" r="2"/><circle cx="17.5" cy="10.5" r="2"/>
+          </svg>
+          <svg class="w-3.5 h-3.5 rotate-12 translate-y-1" viewBox="0 0 24 24" fill="currentColor">
+            <circle cx="12" cy="15.5" r="3.5"/><circle cx="6.5" cy="10.5" r="2"/><circle cx="10" cy="7.5" r="2"/><circle cx="14" cy="7.5" r="2"/><circle cx="17.5" cy="10.5" r="2"/>
+          </svg>
+        </div>
+
+        <!-- 第二段 -->
+        <p id="para-cats" class="essay-paragraph reveal-section rounded-2xl transition-colors duration-500 px-2 -mx-2">
+          老師家就像是一個隱藏在都市裡的貓咪天堂，推開門，迎接我的不是嚴肅的讀書氣氛，而是十隻各具特色的毛茸茸身影。在漫長的備考日子裡，牠們成了我最忠實的「陪讀神隊友」。每當我為了解不開的理化題目而眉頭深鎖、心生挫折時，總會有幾隻貼心的貓咪悄悄走過來。牠們有時用柔軟的身軀輕輕蹭著我的小腿，有時則大剌剌地直接趴在我的課本上，用那雙圓滾滾的眼睛看著我，彷彿在說：「主人，先休息一下吧！」看著牠們優雅又慵懶的姿態，我原本緊繃的神經總能奇蹟似地放鬆下來。
+        </p>
+
+        <!-- 貓掌印分隔線 -->
+        <div class="py-3 flex justify-center items-center gap-4 text-milktea/45 reveal-section" aria-hidden="true">
+          <svg class="w-3.5 h-3.5 rotate-12" viewBox="0 0 24 24" fill="currentColor">
+            <circle cx="12" cy="15.5" r="3.5"/><circle cx="6.5" cy="10.5" r="2"/><circle cx="10" cy="7.5" r="2"/><circle cx="14" cy="7.5" r="2"/><circle cx="17.5" cy="10.5" r="2"/>
+          </svg>
+          <svg class="w-3.5 h-3.5 -rotate-12 translate-y-1" viewBox="0 0 24 24" fill="currentColor">
+            <circle cx="12" cy="15.5" r="3.5"/><circle cx="6.5" cy="10.5" r="2"/><circle cx="10" cy="7.5" r="2"/><circle cx="14" cy="7.5" r="2"/><circle cx="17.5" cy="10.5" r="2"/>
+          </svg>
+        </div>
+
+        <!-- 第三段 -->
+        <p id="para-kitten" class="essay-paragraph reveal-section rounded-2xl transition-colors duration-500 px-2 -mx-2">
+          在所有貓咪中，最受寵的絕對是那隻剛出生不久的小貓。牠小巧得可以一隻手捧起，走路時因為腳步還不太穩，總是搖搖晃晃的，像個毛茸茸的小不倒翁。這隻小傢伙對世界上的一切都充滿好奇，連我手上的原子筆動來動去，牠也能玩得不亦樂乎。每當讀書讀到昏昏欲睡，只要轉頭看見牠翻滾玩耍的呆萌模樣，或是聽見牠微弱卻滿足的「喵喵」聲，我的疲憊瞬間就被療癒了。牠那亮晶晶的眼神，成了我炎熱午後最棒的提神劑。
+        </p>
+
+        <!-- 貓掌印分隔線 -->
+        <div class="py-3 flex justify-center items-center gap-4 text-milktea/45 reveal-section" aria-hidden="true">
+          <svg class="w-3.5 h-3.5 -rotate-12" viewBox="0 0 24 24" fill="currentColor">
+            <circle cx="12" cy="15.5" r="3.5"/><circle cx="6.5" cy="10.5" r="2"/><circle cx="10" cy="7.5" r="2"/><circle cx="14" cy="7.5" r="2"/><circle cx="17.5" cy="10.5" r="2"/>
+          </svg>
+          <svg class="w-3.5 h-3.5 rotate-12 translate-y-1" viewBox="0 0 24 24" fill="currentColor">
+            <circle cx="12" cy="15.5" r="3.5"/><circle cx="6.5" cy="10.5" r="2"/><circle cx="10" cy="7.5" r="2"/><circle cx="14" cy="7.5" r="2"/><circle cx="17.5" cy="10.5" r="2"/>
+          </svg>
+        </div>
+
+        <!-- 第四段 -->
+        <p id="para-milktea" class="essay-paragraph reveal-section rounded-2xl transition-colors duration-500 px-2 -mx-2">
+          除了貓咪們源源不絕的療癒能量，老師的關懷也是這段時光裡不可或缺的調味劑。在動輒三十幾度的高溫下，老師常會在我們苦讀的午後，魔術般地拿出一杯杯冰涼的飲料請我喝。那吸飽珍珠的奶茶或是酸甜清爽的水果茶，不僅消解了夏日的暑氣，更代表著老師對我的體恤與鼓勵。在冰涼飲料下肚的瞬間，那份甜意也流進了心底，化為我繼續奮鬥的動力。
+        </p>
+
+        <!-- 貓掌印分隔線 -->
+        <div class="py-3 flex justify-center items-center gap-4 text-milktea/45 reveal-section" aria-hidden="true">
+          <svg class="w-3.5 h-3.5 rotate-12" viewBox="0 0 24 24" fill="currentColor">
+            <circle cx="12" cy="15.5" r="3.5"/><circle cx="6.5" cy="10.5" r="2"/><circle cx="10" cy="7.5" r="2"/><circle cx="14" cy="7.5" r="2"/><circle cx="17.5" cy="10.5" r="2"/>
+          </svg>
+          <svg class="w-3.5 h-3.5 -rotate-12 translate-y-1" viewBox="0 0 24 24" fill="currentColor">
+            <circle cx="12" cy="15.5" r="3.5"/><circle cx="6.5" cy="10.5" r="2"/><circle cx="10" cy="7.5" r="2"/><circle cx="14" cy="7.5" r="2"/><circle cx="17.5" cy="10.5" r="2"/>
+          </svg>
+        </div>
+
+        <!-- 第五段 -->
+        <p class="essay-paragraph reveal-section">
+          回想起這個暑假，雖然我沒有像其他同學一樣去遊樂園玩耍或出國旅遊，但我卻過得無比充實且開心。這段在貓咪圍繞下寫功課、在老師關愛中成長的獨特經歷，不僅減輕了會考帶來的焦慮，更在我的青春歲月裡，留下了一抹最溫馨、最難忘的色彩。未來的日子裡，每當我在考場上感到疲憊，我想我一定會點起這段記憶，想起那些貓咪的陪伴，然後帶著微笑繼續勇敢前行。
+        </p>
+
+      </div>
+
+      <!-- 頁尾記憶書籤徽章區 -->
+      <footer class="mt-12 pt-8 border-t border-borderwarm/80 reveal-section relative z-10">
+        <p class="text-center font-sans text-xs text-taupe tracking-widest mb-4">
+          夏日回憶關鍵字 • 點擊回顧溫暖片段
+        </p>
+        <div class="flex flex-wrap items-center justify-center gap-3 font-sans">
+          <button type="button" data-target="para-cats" class="memory-badge group inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-cream hover:bg-milktea/15 border border-borderwarm hover:border-milktea/50 text-espresso text-xs sm:text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 cursor-pointer">
+            <span class="text-base group-hover:scale-110 transition-transform">🐾</span>
+            <span>十隻陪讀神隊友</span>
+          </button>
+          
+          <button type="button" data-target="para-kitten" class="memory-badge group inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-cream hover:bg-coral/15 border border-borderwarm hover:border-coral/50 text-espresso text-xs sm:text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 cursor-pointer">
+            <span class="text-base group-hover:scale-110 transition-transform">🐱</span>
+            <span>呆萌小不倒翁</span>
+          </button>
+          
+          <button type="button" data-target="para-milktea" class="memory-badge group inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-cream hover:bg-milktea/15 border border-borderwarm hover:border-milktea/50 text-espresso text-xs sm:text-sm font-medium transition-all duration-300 hover:-translate-y-0.5 cursor-pointer">
+            <span class="text-base group-hover:scale-110 transition-transform">🧋</span>
+            <span>冰涼珍珠奶茶</span>
+          </button>
+        </div>
+      </footer>
+
+    </article>
+
+    <!-- 頁面最底部小語 -->
+    <div class="text-center mt-8 font-sans text-xs text-taupe/80 no-print">
+      願每一段努力備考的青春，都有溫柔的陪伴與甜意 ✨
+    </div>
+
+  </main>
+
+  <!-- 角落互動懸浮按鈕：「摸摸小貓 🐾」與溫馨提示氣泡 -->
+  <div class="fixed bottom-5 right-5 sm:bottom-8 sm:right-8 z-40 flex flex-col items-end gap-2.5 no-print">
+    
+    <!-- 貓咪鼓勵對話氣泡 (Toast) -->
+    <div id="cat-toast" role="status" aria-live="polite" class="opacity-0 translate-y-2 pointer-events-none transition-all duration-300 bg-paper/95 backdrop-blur-xs border border-milktea/40 text-espresso font-sans text-xs sm:text-sm font-medium px-4 py-2.5 rounded-2xl rounded-br-sm shadow-lg flex items-center gap-2 max-w-[240px]">
+      <span class="text-base shrink-0">🐈</span>
+      <span id="cat-toast-text">喵～加油！休息一下吧！</span>
+    </div>
+
+    <!-- 摸摸小貓互動按鈕 -->
+    <button type="button" id="pet-cat-btn" class="group relative inline-flex items-center gap-2 px-5 py-3 rounded-full bg-gradient-to-r from-milktea to-coral text-white font-sans text-sm font-medium shadow-float hover:brightness-105 active:scale-95 transition-all duration-200 cursor-pointer focus:outline-none focus:ring-4 focus:ring-coral/30">
+      <span>摸摸小貓</span>
+      <span class="text-base group-hover:rotate-12 transition-transform duration-200">🐾</span>
+    </button>
+
+  </div>
+
+  <!-- 互動腳本 -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. 頂部閱讀進度條更新
+      const progressBar = document.getElementById('reading-progress');
+      const updateReadingProgress = () => {
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        if (docHeight <= 0) {
+          progressBar.style.width = '100%';
+          return;
+        }
+        const progress = Math.min(100, Math.max(0, (scrollTop / docHeight) * 100));
+        progressBar.style.width = `${progress}%`;
+      };
+      window.addEventListener('scroll', updateReadingProgress, { passive: true });
+      updateReadingProgress();
+
+      // 2. 段落滾動柔和淡入動畫 (IntersectionObserver)
+      const revealElements = document.querySelectorAll('.reveal-section');
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries, obs) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              obs.unobserve(entry.target);
+            }
+          });
+        }, {
+          threshold: 0.12,
+          rootMargin: '0px 0px -30px 0px'
+        });
+
+        revealElements.forEach(el => observer.observe(el));
+      } else {
+        revealElements.forEach(el => el.classList.add('is-visible'));
+      }
+
+      // 3. 字體大小微調功能（兼顧手機與桌面閱讀舒適度）
+      const essayContent = document.getElementById('essay-content');
+      const fontSteps = ['1rem', '1.125rem', '1.25rem', '1.375rem'];
+      let currentFontIndex = 1; // 預設舒適大小
+
+      const applyFontSize = () => {
+        essayContent.style.fontSize = fontSteps[currentFontIndex];
+      };
+
+      document.getElementById('font-decrease').addEventListener('click', () => {
+        if (currentFontIndex > 0) {
+          currentFontIndex--;
+          applyFontSize();
+        }
+      });
+
+      document.getElementById('font-reset').addEventListener('click', () => {
+        currentFontIndex = 1;
+        essayContent.style.fontSize = '';
+      });
+
+      document.getElementById('font-increase').addEventListener('click', () => {
+        if (currentFontIndex < fontSteps.length - 1) {
+          currentFontIndex++;
+          applyFontSize();
+        }
+      });
+
+      // 4. 底部回憶關鍵字徽章點擊：平滑捲動並柔和突顯對應段落
+      const memoryBadges = document.querySelectorAll('.memory-badge');
+      memoryBadges.forEach(badge => {
+        badge.addEventListener('click', () => {
+          const targetId = badge.getAttribute('data-target');
+          const targetEl = document.getElementById(targetId);
+          if (!targetEl) return;
+
+          targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          targetEl.classList.add('bg-milktea/15');
+          setTimeout(() => {
+            targetEl.classList.remove('bg-milktea/15');
+          }, 1600);
+        });
+      });
+
+      // 5. 「摸摸小貓 🐾」互動按鈕：生成愛心與肉球粒子 + 顯示溫馨鼓勵氣泡
+      const petBtn = document.getElementById('pet-cat-btn');
+      const catToast = document.getElementById('cat-toast');
+      const catToastText = document.getElementById('cat-toast-text');
+      
+      const catMessages = [
+        '喵～加油！休息一下吧！',
+        '呼嚕嚕～你已經很努力囉！',
+        '喵嗚～喝口冰涼奶茶再繼續吧！',
+        '蹭蹭你～帶著微笑勇敢前行！',
+        '喵～小不倒翁正在為你打氣！'
+      ];
+      let clickCount = 0;
+      let toastTimer = null;
+
+      const spawnParticles = (originRect) => {
+        const icons = ['🐾', '🧡', '✨', '💛', '🐾'];
+        const count = 6;
+        const startX = originRect.left + originRect.width / 2;
+        const startY = originRect.top + originRect.height / 2;
+
+        for (let i = 0; i < count; i++) {
+          const particle = document.createElement('span');
+          particle.className = 'floating-particle select-none text-base sm:text-lg';
+          particle.textContent = icons[i % icons.length];
+          
+          const tx = (Math.random() - 0.5) * 110;
+          const ty = -65 - Math.random() * 85;
+          const rot = (Math.random() - 0.5) * 50;
+
+          particle.style.left = `${startX}px`;
+          particle.style.top = `${startY}px`;
+          particle.style.setProperty('--tx', `${tx}px`);
+          particle.style.setProperty('--ty', `${ty}px`);
+          particle.style.setProperty('--rot', `${rot}deg`);
+
+          document.body.appendChild(particle);
+          setTimeout(() => particle.remove(), 1650);
+        }
+      };
+
+      petBtn.addEventListener('click', () => {
+        const rect = petBtn.getBoundingClientRect();
+        spawnParticles(rect);
+
+        // 第一次點擊固定顯示「喵～加油！休息一下吧！」，後續輪流切換溫暖鼓勵
+        catToastText.textContent = catMessages[clickCount % catMessages.length];
+        clickCount++;
+
+        catToast.classList.remove('opacity-0', 'translate-y-2');
+        catToast.classList.add('opacity-100', 'translate-y-0');
+
+        if (toastTimer) clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          catToast.classList.remove('opacity-100', 'translate-y-0');
+          catToast.classList.add('opacity-0', 'translate-y-2');
+        }, 3000);
+      });
+    });
+  </script>
+</body>
+</html>
